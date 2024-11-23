@@ -61,12 +61,12 @@ const Filter = () => {
 
     const userMaxCount = parseInt(
       prompt(
-        `Output Counts (Contacts per account 1 to 10):\n${Object.entries(
+        `Output Counts (IDM_ID per Company 1 to 10):\n${Object.entries(
           outputCounts
         )
           .map(
             ([maxCount, count]) =>
-              `Indiv ID ${maxCount} per company: ${count} Person_ID(s)`
+              `IDM_ID ${maxCount} per company: ${count} Person_ID(s)`
           )
           .join("\n")}\n\nEnter the Max Count you want:`
       )
@@ -128,7 +128,7 @@ const Filter = () => {
 
   useEffect(() => {
     const initialButtonTexts = splitDataChunks.reduce((acc, _, index) => {
-      acc[index] = "Copy Indiv_IDs to Clipboard";
+      acc[index] = "Copy IDM_IDs to Clipboard";
       return acc;
     }, {});
     setCopyButtonTexts(initialButtonTexts);
@@ -152,7 +152,7 @@ const Filter = () => {
           setCopyButtonTexts((prevState) => {
             const resetState = {
               ...prevState,
-              [chunkIndex]: "Copy Indiv_IDs to Clipboard",
+              [chunkIndex]: "Copy IDM_IDs to Clipboard",
             };
             console.log("Reset state:", resetState); // Debugging
             return resetState;
@@ -254,7 +254,7 @@ const Filter = () => {
 
         <div className="single">
           <p style={{ marginTop: "20px", fontSize: "18px" }}>
-            Enter the IDM COMP, IDM Person ID, and Job level:-
+            Enter the IDM_Company_ID, IDM_ID, and Job level:-
           </p>
         </div>
       </div>
@@ -289,7 +289,7 @@ const Filter = () => {
       <div>
         <h2
           style={{
-            marginLeft: "15px",
+            marginLeft: "50px",
             marginBottom: "20px",
             marginTop: "15px",
           }}
@@ -343,7 +343,7 @@ const Filter = () => {
                   className="btn btn-success"
                   onClick={() => copyIndivIDsToClipboard(chunk, index)}
                 >
-                  {copyButtonTexts[index] || "Copy Indiv_IDs to Clipboard"}
+                  {copyButtonTexts[index] || "Copy IDM_IDs to Clipboard"}
                 </button>
                 <span style={{ fontWeight: "bold", marginLeft: "10px" }}>
                   ({chunk.length} records)
@@ -353,7 +353,7 @@ const Filter = () => {
                 <thead>
                   <tr>
                     <th>IDM Comp_ID</th>
-                    <th style={{ paddingLeft: "30px" }}>IDM Indiv_ID</th>
+                    <th style={{ paddingLeft: "30px" }}>IDM_ID</th>
                     <th style={{ paddingLeft: "10px" }}>Job_Level</th>
                   </tr>
                 </thead>
