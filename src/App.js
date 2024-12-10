@@ -1,5 +1,5 @@
 import React from "react";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Components/Home";
 import Filter from "./Components/Filter";
 import "./Components/styles.css";
@@ -10,7 +10,7 @@ function App() {
     <Router basename="/IDM-Filter">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Filter" element={<Filter />} />
+        <Route path="/filter" element={<Filter />} />
       </Routes>
     </Router>
   );

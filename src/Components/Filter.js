@@ -26,20 +26,18 @@ const Filter = () => {
     });
   };
 
-  const handleProcessData = () => {
-    if (!jobLevels.trim() || !bulkDataInput.trim()) {
-      alert("Both Job Level and Comp ID Person ID fields are mandatory.");
-      return;
-    }
-    const parsedData = parseInputData();
-    const jobLevelsArray = jobLevels ? jobLevels.split(",").map(Number) : [];
-
+  // Function to calculate output counts and prompt the user for max count
+  const generateOutputCounts = (data) => {
+    const jobLevelsArray = jobLevels.trim()
+      ? jobLevels.split(",").map(Number)
+      : [];
     const outputCounts = {};
+
     for (let maxCount = 1; maxCount <= 10; maxCount++) {
       const dict = {};
       let count = 0;
 
-      parsedData.forEach((row) => {
+      data.forEach((row) => {
         const { company, jobLevel } = row;
         if (
           jobLevelsArray.length &&
@@ -47,6 +45,7 @@ const Filter = () => {
           !jobLevelsArray.includes(jobLevel)
         )
           return;
+
         if (!dict[company]) {
           dict[company] = 1;
           count++;
@@ -59,44 +58,82 @@ const Filter = () => {
       outputCounts[maxCount] = count;
     }
 
-    const userMaxCount = parseInt(
+    // Prompt user to select max count
+    const maxCount = parseInt(
       prompt(
         `Output Counts (IDM_ID per Company 1 to 10):\n${Object.entries(
           outputCounts
         )
           .map(
-            ([maxCount, count]) =>
-              `IDM_ID ${maxCount} per company: ${count} Person_ID(s)`
+            ([count, result]) =>
+              `IDM_ID ${count} per company: ${result} Person_ID(s)`
           )
           .join("\n")}\n\nEnter the Max Count you want:`
       )
     );
 
-    if (isNaN(userMaxCount) || userMaxCount < 1) {
+    return maxCount;
+  };
+
+  // Core function to process the data
+  const handleProcessData = () => {
+    if (!jobLevels.trim() || !bulkDataInput.trim()) {
+      alert("Both Job Level and Data Input fields are mandatory.");
+      return;
+    }
+
+    const parsedData = parseInputData();
+    if (parsedData.length === 0) return;
+
+    // Prompt user for max count
+    const maxCount = generateOutputCounts(parsedData);
+    if (isNaN(maxCount) || maxCount < 1) {
       alert("Invalid max count selected.");
       return;
     }
 
-    const dict = {};
-    const processedData = parsedData.filter((row) => {
-      const { company, jobLevel } = row;
-      if (
-        jobLevelsArray.length &&
-        jobLevel !== null &&
-        !jobLevelsArray.includes(jobLevel)
-      )
-        return false;
+    const jobLevelsArray = jobLevels.trim()
+      ? jobLevels.split(",").map(Number)
+      : [];
+    const dict = {}; // To keep track of employees processed per company
+    const processedData = [];
 
-      if (!dict[company]) {
-        dict[company] = 1;
-        return true;
-      } else if (dict[company] < userMaxCount) {
-        dict[company]++;
-        return true;
+    // Group data by company
+    const companyData = parsedData.reduce((acc, row) => {
+      const { company } = row;
+      if (!acc[company]) acc[company] = [];
+      acc[company].push(row);
+      return acc;
+    }, {});
+
+    // Process data for each company
+    for (const company in companyData) {
+      const companyRows = companyData[company].filter((row) =>
+        jobLevelsArray.includes(row.jobLevel)
+      );
+      const selectedRows = [];
+      let levelIndex = 0; // Track current job level index
+
+      // Continue until max count or available records are selected
+      while (selectedRows.length < maxCount && companyRows.length) {
+        const targetLevel = jobLevelsArray[levelIndex];
+        const index = companyRows.findIndex(
+          (row) => row.jobLevel === targetLevel
+        );
+
+        if (index !== -1) {
+          selectedRows.push(companyRows[index]);
+          companyRows.splice(index, 1); // Remove selected row from company data
+        }
+
+        // Move to next job level, looping back if at end of list
+        levelIndex = (levelIndex + 1) % jobLevelsArray.length;
       }
-      return false;
-    });
 
+      processedData.push(...selectedRows);
+    }
+
+    // Sort and set processed data
     processedData.sort((a, b) => a.company.localeCompare(b.company));
     setOutputData(processedData);
   };
