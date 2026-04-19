@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/marketo-Page/static/css/main.87341241.css",
-    "main.js": "/marketo-Page/static/js/main.fc511358.js",
-    "static/js/453.a2f54511.chunk.js": "/marketo-Page/static/js/453.a2f54511.chunk.js",
-    "index.html": "/marketo-Page/index.html",
-    "main.87341241.css.map": "/marketo-Page/static/css/main.87341241.css.map",
-    "main.fc511358.js.map": "/marketo-Page/static/js/main.fc511358.js.map",
-    "453.a2f54511.chunk.js.map": "/marketo-Page/static/js/453.a2f54511.chunk.js.map"
+    "main.css": "/Rahul-Rayappasamy/marketo-Page.git/static/css/main.87341241.css",
+    "main.js": "/Rahul-Rayappasamy/marketo-Page.git/static/js/main.636abb7f.js",
+    "static/js/453.a2f54511.chunk.js": "/Rahul-Rayappasamy/marketo-Page.git/static/js/453.a2f54511.chunk.js",
+    "index.html": "/Rahul-Rayappasamy/marketo-Page.git/index.html",
+    "main.87341241.css.map": "/Rahul-Rayappasamy/marketo-Page.git/static/css/main.87341241.css.map",
+    "main.636abb7f.js.map": "/Rahul-Rayappasamy/marketo-Page.git/static/js/main.636abb7f.js.map",
+    "453.a2f54511.chunk.js.map": "/Rahul-Rayappasamy/marketo-Page.git/static/js/453.a2f54511.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.87341241.css",
-    "static/js/main.fc511358.js"
+    "static/js/main.636abb7f.js"
   ]
 }
