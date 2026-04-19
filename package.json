@@ -2,7 +2,7 @@
   "name": "idm-filter",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Rahul-Rayappasamy.github.io/marketo-Page",
+  "homepage": "https://github.ibm.com/Rahul-Rayappasamy/marketo-Page.git",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
