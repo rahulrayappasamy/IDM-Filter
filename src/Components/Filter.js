@@ -62,14 +62,14 @@ const Filter = () => {
     const maxCount = parseInt(
       prompt(
         `Output Counts (IDM_ID per Company 1 to 10):\n${Object.entries(
-          outputCounts
+          outputCounts,
         )
           .map(
             ([count, result]) =>
-              `IDM_ID ${count} per company: ${result} Person_ID(s)`
+              `IDM_ID ${count} per company: ${result} Person_ID(s)`,
           )
-          .join("\n")}\n\nEnter the Max Count you want:`
-      )
+          .join("\n")}\n\nEnter the Max Count you want:`,
+      ),
     );
 
     return maxCount;
@@ -95,7 +95,7 @@ const Filter = () => {
     const jobLevelsArray = jobLevels.trim()
       ? jobLevels.split(",").map(Number)
       : [];
-    const dict = {}; // To keep track of employees processed per company
+    //const dict = {}; // To keep track of employees processed per company
     const processedData = [];
 
     // Group data by company
@@ -109,7 +109,7 @@ const Filter = () => {
     // Process data for each company
     for (const company in companyData) {
       const companyRows = companyData[company].filter((row) =>
-        jobLevelsArray.includes(row.jobLevel)
+        jobLevelsArray.includes(row.jobLevel),
       );
       const selectedRows = [];
       let levelIndex = 0; // Track current job level index
@@ -118,7 +118,7 @@ const Filter = () => {
       while (selectedRows.length < maxCount && companyRows.length) {
         const targetLevel = jobLevelsArray[levelIndex];
         const index = companyRows.findIndex(
-          (row) => row.jobLevel === targetLevel
+          (row) => row.jobLevel === targetLevel,
         );
 
         if (index !== -1) {
@@ -238,10 +238,12 @@ const Filter = () => {
         data-bs-theme="dark"
       >
         <div className="container" style={{ marginLeft: "20px" }}>
-          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-            <a className="navbar-brand" href="#">
-              IBM APPS
-            </a>
+          <Link
+            to="/"
+            className="navbar-brand"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            IBM APPS
           </Link>
           <button
             className="navbar-toggler"
@@ -259,11 +261,11 @@ const Filter = () => {
               <li className="nav-item">
                 <Link
                   to="/filter"
+                  className="nav-link active"
+                  aria-current="page"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  <a className="nav-link active" aria-current="page" href="#">
-                    IDM Filter
-                  </a>
+                  IDM Filter
                 </Link>
               </li>
             </ul>
@@ -271,7 +273,7 @@ const Filter = () => {
         </div>
       </nav>
       <div className="data" style={{ marginTop: "100px" }}>
-        <h3>IDM Data Filter Tool</h3>
+        <h3>IDM Audience Filter Tool</h3>
 
         <div className="joblev">
           <label htmlFor="jobLevels" style={{ fontSize: "18px" }}>
@@ -291,7 +293,8 @@ const Filter = () => {
 
         <div className="single">
           <p style={{ marginTop: "20px", fontSize: "18px" }}>
-            Enter the IDM_Company_ID, IDM_ID, and Job level:-
+            Enter the SFDC Acc no/Master ID/IDM_Company_ID, IDM_ID, and Job
+            level:-
           </p>
         </div>
       </div>
